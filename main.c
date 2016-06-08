@@ -6,9 +6,11 @@
 #include <locale.h>
 
 
-
+//Para receber os valores
 double eO2,eCF,ePH,eDBO,eDT,eNT,eFT,eTU,eRT;
+// Para enviar a estruturas
 IQA_L v;
+//Para retornar valores
 char *iqastring;
 
 GtkWidget *janela,*calcular,*lO2,*tO2,*lCF,*tCF,*lPH,*tPH,*lDBO,*tDBO,*lFT,*tFT,*lNT,*tNT,*lTU,*tTU,*lDT,*tDT,*lST,*tST,*lestado,*testado,*sobre,*tabela,*lvalor,*tvalor;
@@ -16,35 +18,44 @@ GtkWidget *messagedialog;
 
 GtkAdjustment *adjustment1,*adjustment2,*adjustment3,*adjustment4,*adjustment5,*adjustment6,*adjustment7,*adjustment8,*adjustment9;
 
-
+// Recebe O2
 void cO2(GtkButton *calcular, GtkEntry *valor ){
   eO2 = atof(gtk_entry_get_text(valor));
 
 }
+// Recebe CF
 void cCF(GtkButton *calcular, GtkEntry *valor){
   eCF = atof(gtk_entry_get_text(valor));
 }
+//Recebe PH
 void cPH(GtkButton *calcular, GtkEntry *valor ){
   ePH = atof(gtk_entry_get_text(valor));
 }
+//Recebe DBO
 void cDBO(GtkButton *calcular, GtkEntry *valor ){
   eDBO = atof(gtk_entry_get_text(valor));
 }
+//Recebe Temperatura
 void cDT(GtkButton *calcular, GtkEntry *valor ){
   eDT = atof(gtk_entry_get_text(valor));
 }
+//Recebe NT
 void cNT(GtkButton *calcular, GtkEntry *valor ){
   eNT = atof(gtk_entry_get_text(valor));
 }
+//Recebe FT
 void cFT(GtkButton *calcular, GtkEntry *valor ){
   eFT = atof(gtk_entry_get_text(valor));
 }
+//Recebe TU
 void cTU(GtkButton *calcular, GtkEntry *valor ){
   eTU = atof(gtk_entry_get_text(valor));
 }
+//Recebe RT
 void cRT(GtkButton *calcular, GtkEntry *valor ){
 eRT = atof(gtk_entry_get_text(valor));
 }
+//Resultado a receber
 void Resultado(GtkButton *calcular, GtkEntry *valor)
 {
   gchar *display;
@@ -65,6 +76,8 @@ gtk_entry_set_text (GTK_ENTRY(valor), display);
 g_free(display);
 g_print("%lf\n",val);
 }
+
+//Autor
 static void on_button_clicked(GtkWidget *button, gchar* message)
 {
     gchar *text = "Criado por: \n\n Saulo Henrique de Castro";
@@ -74,7 +87,7 @@ static void on_button_clicked(GtkWidget *button, gchar* message)
     gtk_dialog_run(GTK_DIALOG(messagedialog));
     gtk_widget_destroy(messagedialog);
 }
-
+//Recebe a qualidade
 void Classificacao(GtkButton *calcular, GtkEntry *valor)
 {
 
@@ -84,26 +97,14 @@ gtk_entry_set_text (GTK_ENTRY(valor), display);
 g_free(display);
 }
 
+//Botão Spin
 gfloat grab_float_value (GtkSpinButton *button, gpointer user_data)
 {
   return gtk_spin_button_get_value (button);
 }
 
-static void button_clicked(GtkWidget *widget, gpointer data)
-{
-        g_print("%s\n", gtk_entry_get_text(GTK_ENTRY(data)));
-        gtk_editable_select_region(GTK_EDITABLE(data), 0,-1);
-        gtk_editable_copy_clipboard(GTK_EDITABLE(data));
-}
 
-
-static gboolean delete_event( GtkWidget *widget,GdkEvent  *event,gpointer data )
-{
-    g_print ("evento 'delete' ocorreu\n");
-    gtk_main_quit();
-
-    return TRUE;
-}
+// Fechar
 void sair(GtkWidget *widget, gpointer data) {
 
 g_print("Saindo...\n");
@@ -127,34 +128,37 @@ int main (int argc,  char **argv)
   adjustment7 = gtk_adjustment_new (0.0, 0.0, 10000000.0, 0.001, 0.1, 0.0);
   adjustment8 = gtk_adjustment_new (0.0, 0.0, 10000000.0, 0.001, 0.1, 0.0);
   adjustment9 = gtk_adjustment_new (0.0, 0.0, 10000000.0, 0.001, 0.1, 0.0);
+// Grid para tabela
   tabela = gtk_grid_new();
   gtk_grid_get_row_homogeneous (GTK_GRID (tabela));
   gtk_grid_set_row_spacing (GTK_GRID (tabela), 2);
   gtk_grid_set_column_spacing (GTK_GRID (tabela), 12);
-  lO2 = gtk_label_new("Oxigênio Dissolvido:");
+  //Botões e Labels
+  lO2 = gtk_label_new("Oxigênio Dissolvido: (% saturação)");
   tO2 = gtk_spin_button_new (adjustment1, 0.001, 4);
-  lCF = gtk_label_new("Coliformes Fecais:");
+  lCF = gtk_label_new("Coliformes Fecais: (NMP/100mL)");
   tCF = gtk_spin_button_new (adjustment2, 0.001, 4);
-  lPH = gtk_label_new("Potencial Hidrogênico:");
+  lPH = gtk_label_new("Potencial Hidrogênico: (unidades de pH)");
   tPH = gtk_spin_button_new (adjustment3, 0.001, 4);
-  lDBO = gtk_label_new("Demanda Bioquímica de Oxigênio:");
+  lDBO = gtk_label_new("Demanda Bioquímica de Oxigênio: (mg/L)");
   tDBO = gtk_spin_button_new (adjustment4, 0.001, 4);
-  lDT = gtk_label_new("Temperatura:");
+  lDT = gtk_label_new("Temperatura: (°C)");
   tDT = gtk_spin_button_new (adjustment5, 0.001, 4);
-  lNT = gtk_label_new("Nitrogênio Total:");
+  lNT = gtk_label_new("Nitrogênio Total: (mg/L)");
   tNT = gtk_spin_button_new (adjustment6, 0.001, 4);
-  lFT = gtk_label_new("Fósforo Total:");
+  lFT = gtk_label_new("Fósforo Total: (mg/L)");
   tFT = gtk_spin_button_new (adjustment7, 0.001, 4);
-  lTU = gtk_label_new("Turbidez:");
+  lTU = gtk_label_new("Turbidez: (UNT)");
   tTU = gtk_spin_button_new (adjustment8, 0.001, 4);
-  lST = gtk_label_new("Resíduo Total:");
+  lST = gtk_label_new("Resíduo Total: (mg/L)");
   tST = gtk_spin_button_new (adjustment9, 0.001, 4);
   lvalor = gtk_label_new("Valor IQA:");
   tvalor = gtk_entry_new();
-  lestado = gtk_label_new("Classificação");
+  lestado = gtk_label_new("Classificação:");
   testado = gtk_entry_new();
   calcular = gtk_button_new_with_mnemonic("Calcular");
   sobre = gtk_button_new_with_mnemonic("Sobre...");
+  // Posição, tamanho...
   gtk_grid_attach(GTK_GRID(tabela), lO2, 0,0,1,1);
   gtk_grid_attach(GTK_GRID(tabela), tO2, 1,0,1,1);
   gtk_grid_attach(GTK_GRID(tabela), lCF, 0,1,1,1);
@@ -180,9 +184,8 @@ int main (int argc,  char **argv)
   gtk_grid_attach(GTK_GRID(tabela), calcular, 0,11,1,1);
   gtk_grid_attach(GTK_GRID(tabela), sobre, 1,11,1,1);
   gtk_container_add(GTK_CONTAINER(janela), tabela);
-
-
   gtk_widget_show_all(janela);
+  // Para funções receberem os valores
   g_signal_connect(G_OBJECT(calcular), "clicked", G_CALLBACK(cO2), tO2);
   g_signal_connect(G_OBJECT(calcular), "clicked", G_CALLBACK(cCF), tCF);
   g_signal_connect(G_OBJECT(calcular), "clicked", G_CALLBACK(cPH), tPH);
