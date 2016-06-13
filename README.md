@@ -6,7 +6,7 @@ Saulo Henrique de Castro
 
 Para compilar o programa:
 ```
-gcc `pkg-config --cflags gtk+-3.0` -o example-0 example-0.c `pkg-config --libs gtk+-3.0`-lm
+gcc `pkg-config --cflags gtk+-3.0` -o iqa iqa.h iqa.c main.c `pkg-config --libs gtk+-3.0` -lm
 ```
 Opcionalmente você pode utilizar o cmake
 ```
