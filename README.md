@@ -4,6 +4,8 @@ Trabalho de programação da Algoritmos com objetivo de criar calculadora de IQA
 #Membros
 Saulo Henrique de Castro
 
+#Gerando o executável
+
 Para compilar o programa:
 ```
 gcc `pkg-config --cflags gtk+-3.0` -o iqa iqa.h iqa.c main.c `pkg-config --libs gtk+-3.0` -lm
