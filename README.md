@@ -1,8 +1,6 @@
 # bccIQA
-Trabalho de programação da Algoritmos com objetivo de criar calculadora de IQA(Índice de Qualidade das Água)
+Trabalho de programação da Algoritmos com objetivo de criar calculadora de IQA(Índice de Qualidade da Água)
 
-#Membros
-Saulo Henrique de Castro
 
 #Gerando o executável
 
