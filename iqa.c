@@ -3,56 +3,51 @@
 #include "iqa.h"
 #include <locale.h>
 
-
-
 // Define dos Status
-#define OTIMO_M 100
-#define OTIMO_P 80
-#define BOM_M 79
-#define BOM_P 51
-#define ACEITAVEL_M 50
-#define ACEITAVEL_P 37
-#define RUIM_M 36
-#define RUIM_P 20
-#define PESSIMO_M 19
+#define OTIMO_M 100.00
+#define OTIMO_P 80.00
+#define BOM_M 79.99
+#define BOM_P 51.00
+#define ACEITAVEL_M 50.99
+#define ACEITAVEL_P 37.00
+#define RUIM_M 36.99
+#define RUIM_P 20.00
+#define PESSIMO_M 19.99
 #define PESSIMO_P 0
 
-double iqa(IQA_L t){
+double iqa(IQA_L t,IQA_P pe){
   double p = 1;
 
-  p *= pow(fO2(t.O2), O2_PESO);
-  p *= pow(fCF(t.CF), CF_PESO);
-  p *= pow(fPH(t.PH),  PH_PESO);
-  p *= pow(fDBO(t.DBO), DBO_PESO);
-	p *= pow(fDT(t.DT),  DT_PESO);
-	p *= pow(fNT(t.NT),  NT_PESO);
-	p *= pow(fFT(t.FT),  FT_PESO);
-	p *= pow(fTU(t.TU),  TU_PESO);
-	p *= pow(fST(t.ST),  ST_PESO);
-
+  p *= pow(fO2(t.O2), pe.pO2);
+  p *= pow(fCF(t.CF), pe.pCF);
+  p *= pow(fPH(t.PH),  pe.pPH);
+  p *= pow(fDBO(t.DBO), pe.pDBO);
+	p *= pow(fDT(t.DT),  pe.pDT);
+	p *= pow(fNT(t.NT),  pe.pNT);
+	p *= pow(fFT(t.FT),  pe.pFT);
+	p *= pow(fTU(t.TU),  pe.pTU);
+	p *= pow(fST(t.ST),  pe.pST);
   return p;
 }
-
-
 // Converte o IQAState para string
-char* iqa_state(double iqa)
+char* iqa_state(double iqa_v)
 {
   // Para aceitar caracteres em português
   setlocale(LC_ALL, "Portuguese");
 
-  if (iqa <= PESSIMO_P)
+  if (iqa_v <= PESSIMO_P)
   return "Péssima";
-	if (iqa >= OTIMO_M)
+	if (iqa_v >= OTIMO_M)
   return "Òtima";
-	if (iqa > PESSIMO_P && iqa < PESSIMO_M)
+	if (iqa_v > PESSIMO_P && iqa_v < PESSIMO_M)
   return "Péssima";
-	if (iqa > RUIM_P   && iqa < RUIM_M)
+	if (iqa_v > RUIM_P   && iqa_v < RUIM_M)
   return "Ruim";
-	if (iqa > ACEITAVEL_P    && iqa < ACEITAVEL_M)
+	if (iqa_v > ACEITAVEL_P    && iqa_v < ACEITAVEL_M)
   return "Aceitável";
-	if (iqa > BOM_P  && iqa < BOM_M)
+	if (iqa_v > BOM_P  && iqa_v < BOM_M)
   return "Bom";
-	if (iqa > OTIMO_P  && iqa < OTIMO_M)
+	if (iqa_v > OTIMO_P  && iqa_v < OTIMO_M)
   return "Ótima";
 }
 
@@ -72,7 +67,6 @@ double fCF (double CF)
 	if (CF > 100000)
   return 3.0;
 
-	double l10 = log10(CF);
   CF = CF_PAR_A + ( CF_PAR_B * log10(CF)) + ( CF_PAR_C * pow( log10(CF), 2 )) + (CF_PAR_D * pow( log10(CF), 3 ));
 
 	return CF;

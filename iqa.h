@@ -1,3 +1,6 @@
+#ifndef IQA_H   // guardas de cabeçalho, impedem inclusões cíclicas
+#define IQA_H
+
 //Pesos dos parametros
 #define O2_PESO 0.17
 #define CF_PESO 0.15
@@ -68,6 +71,17 @@ typedef struct{
 	double ST;
 } IQA_L;
 
+typedef struct{
+  double pO2;
+	double pCF;
+	double pPH;
+	double pDBO;
+	double pDT;
+	double pNT;
+	double pFT;
+	double pTU;
+	double pST;
+} IQA_P;
 
 
 // Definição das funções de cada um dos parâmetros utilizados
@@ -81,6 +95,8 @@ double fTU  (double);
 double fDT  (double);
 double fST  (double);
 
+
 //Funções pré-definidas no Header
-double iqa(IQA_L);
-char* iqa_state(double);
+double iqa(IQA_L,IQA_P);
+char* iqa_state(double iqa_v);
+#endif
